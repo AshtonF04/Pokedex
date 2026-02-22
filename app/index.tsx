@@ -1,59 +1,38 @@
-import { useEffect, useState } from 'react';
-import { Image, ScrollView, Text, View } from "react-native";
+// Import hooks
+import { usePokemon } from './hooks/usePokemon';
 
-// Define Pokemon Type
-interface Pokemon {
-  name: string;
-  imageURL: string;
-}
+// Import react native components
+import { FlatList, Text, View } from "react-native";
+
+// Import custom components
+import PokemonCard from './components/PokemonCard';
 
 export default function Index() {
 
-  const [pokemon, setPokemon] = useState<Pokemon[]>([])
-
-  // Fetch Pokemon from API on mount
-  useEffect(() => {
-    const fetchPokemon = async () => {
-      const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=10');
-      const data = (await response.json()).results;
-
-      // Fetch details for each pokemon
-      const detailedPokemon = await Promise.all(
-        data.map(async (pokemon) => {
-          const res = await fetch(pokemon.url);
-          const details = await res.json();
-
-          return {
-            name: pokemon.name,
-            imageURL: details.sprites.front_default,
-          };
-        })
-      );
-
-      setPokemon(detailedPokemon)
-    }
-    fetchPokemon();
-  }, [])
+  // Fetch pokemon from API
+  const pokemon = usePokemon();
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <ScrollView>
-        {pokemon.map((pokemon) => (
-          <View key={pokemon.name}>
-            <Text>{pokemon.name}</Text>
-            <Image
-              source={{uri: pokemon.imageURL}}
-              style={{width: 150, height:150}}
-            ></Image>
-          </View>
-        ))}
-      </ScrollView>
+    <View className="flex-1 justify-center items-center px-4 mt-20">
+      {/* Header section */}
+      <View className="w-full flex p-4 gap-2">
+        <Text className="font-bold text-4xl">Pokedex</Text>
+        <Text>View a list of all pokemon below ordered by regional dex number.</Text>
+      </View>
+
+      {/* Scroll View to contain all pokemon */}
+      <FlatList
+        className="w-full"
+        data={pokemon}
+        keyExtractor={(item) => item.dexNumber.toString()}
+        numColumns={2}
+        contentContainerStyle={{ paddingBottom: 20 }}
+        columnWrapperStyle={{ justifyContent: "space-between", marginBottom: 12 }}
+        renderItem={({ item }) => (
+          <PokemonCard pokemon={item} />
+        )}
+      />
+
     </View>
   );
 }

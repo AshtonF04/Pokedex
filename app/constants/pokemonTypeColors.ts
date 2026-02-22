@@ -1,0 +1,21 @@
+export const POKEMON_TYPE_COLORS: Record<string, string> = {
+    normal: "#B8B7A3",
+    fire: "#E89A73",
+    water: "#7FA6E8",
+    electric: "#E8D77A",
+    grass: "#9CCF8A",
+    ice: "#A8D8D6",
+    fighting: "#C96F6A",
+    poison: "#B57FB3",
+    ground: "#D6C28A",
+    flying: "#B8A9E8",
+    psychic: "#E88AA6",
+    bug: "#B6C86A",
+    rock: "#C7B98A",
+    ghost: "#8C7FA8",
+    dragon: "#8E7BE8",
+    dark: "#8A7F78",
+    steel: "#C9C9D6",
+    fairy: "#E3AFC4",
+  };
+  
