@@ -2,4 +2,5 @@
 export interface PokemonAbility {
     name: string,
     effect: string,
+    isHidden: boolean
 }

@@ -41,6 +41,7 @@ export function usePokemonDetails(id:any){
             const abilities = await Promise.all(
                 data.abilities.map(async (slot: any) => {
                     const { name, url } = slot.ability
+                    const isHidden = slot.is_hidden
                     let effect = ""
                     try {
                         const res = await fetch(url)
@@ -52,10 +53,10 @@ export function usePokemonDetails(id:any){
                     } catch {
                         effect = ""
                     }
-                    return { name, effect }
+                    return { name, effect, isHidden }
                 })
             )
-
+            
             const pokemon:PokemonDetails = {
                 name: capitalizeFirstLetter(data.name),
                 frontSpriteURL: data.sprites.front_default,
