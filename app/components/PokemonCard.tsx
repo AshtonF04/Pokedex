@@ -26,7 +26,7 @@ const PokemonCard = ({ pokemon }: { pokemon: Pokemon }) => {
     const typeColor = POKEMON_TYPE_COLORS[pokemon.types[0]?.name] ?? "#777"
 
     return (
-        <Link href={`../pokemon/${pokemon.dexNumber}`} className="m-2 w-5/12">
+        <Link href={`../${pokemon.dexNumber}/info`} className="m-2 w-5/12">
             <View className="rounded-md p-2 justify-center items-center w-full" style={[shadowMdStyle, { backgroundColor: typeColor }]}>
                 <Image
                     source={{ uri: pokemon.imageURL }}

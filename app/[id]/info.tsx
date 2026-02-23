@@ -1,11 +1,10 @@
-import { useLocalSearchParams, useNavigation } from 'expo-router'
-import React, { useEffect } from 'react'
+import { useLocalSearchParams } from 'expo-router'
+import React from 'react'
 import { Image, Platform, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { getDefensiveMatchups } from '../constants/pokemonTypeChart'
 import { POKEMON_TYPE_COLORS } from '../constants/pokemonTypeColors'
 import { TYPE_ICONS } from '../constants/pokemonTypeIcons'
 import { usePokemonDetails } from '../hooks/usePokemonDetails'
-
-import { getDefensiveMatchups } from '../constants/pokemonTypeChart'
 import { capitalizeFirstLetter } from '../utils/stringUtils'
 
 const shadowMdStyle = Platform.select({
@@ -27,32 +26,23 @@ export default function PokemonDetails() {
     // Fetch pokemon details
     const pokemon = usePokemonDetails(id)
 
-
-    // Modify navigation options to set header title dynamically
-    const navigation = useNavigation()
-    useEffect(() => {
-        if (pokemon === undefined) return
-        navigation.setOptions({
-            title: ``
-        })
-    }, [pokemon])
-
     // Component JSX
     if (pokemon === undefined) return <Text>Loading</Text>
     return (
-        <ScrollView className="p-4 " contentContainerClassName='items-center pb-20'>
+        <>
+        <ScrollView className="p-4 " contentContainerClassName='pb-32'>
             {/* Header Section */}
-            <Text className="font-bold text-3xl">{pokemon.name}</Text>
-            <Text className="text-lg font-light">{pokemon.dexNumber.toString().padStart(3, '0')}</Text>
+            <Text className="font-bold text-3xl text-center">{pokemon.name}</Text>
+            <Text className="text-lg font-light text-center">{pokemon.dexNumber.toString().padStart(3, '0')}</Text>
 
             {/* Images */}
-            <View className="flex-row">
+            <View className="flex-row items-center justify-center">
                 <Image source={{uri: pokemon.frontSpriteURL}} style={{width: 175, height: 175}}></Image>
                 <Image source={{uri: pokemon.backSpriteURL}} style={{width: 175, height: 175}}></Image>
             </View>
             
             {/* Types Display */}
-            <View className="flex-row gap-5 mt-8">
+            <View className="flex-row gap-5 mt-8 items-center justify-center">
                 {pokemon.types.map((type) => (
                     <View key={type.name} className='flex-row items-center gap-2 w-40 p-2 rounded-full shadow-sm elevation-sm' style={{backgroundColor: POKEMON_TYPE_COLORS[type.name]}}>
                         <Image source={TYPE_ICONS[type.name]} style={{width: 15, height: 15}}></Image>
@@ -173,6 +163,9 @@ export default function PokemonDetails() {
                 })}
             </View>
         </ScrollView>
+        {/* Menu Bar */}
+
+        </>
     )
 }
 
