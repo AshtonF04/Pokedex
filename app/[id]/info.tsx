@@ -5,7 +5,7 @@ import { getDefensiveMatchups } from '../constants/pokemonTypeChart'
 import { POKEMON_TYPE_COLORS } from '../constants/pokemonTypeColors'
 import { TYPE_ICONS } from '../constants/pokemonTypeIcons'
 import { usePokemonDetails } from '../hooks/usePokemonDetails'
-import { capitalizeFirstLetter } from '../utils/stringUtils'
+import { capitalizeFirstLetter, capitalizeWords } from '../utils/stringUtils'
 
 const shadowMdStyle = Platform.select({
     ios: {
@@ -32,7 +32,7 @@ export default function PokemonDetails() {
         <>
         <ScrollView className="p-4 " contentContainerClassName='pb-32'>
             {/* Header Section */}
-            <Text className="font-bold text-3xl text-center">{pokemon.name}</Text>
+            <Text className="font-bold text-3xl text-center">{capitalizeWords(pokemon.name)}</Text>
             <Text className="text-lg font-light text-center">{pokemon.dexNumber.toString().padStart(3, '0')}</Text>
 
             {/* Images */}

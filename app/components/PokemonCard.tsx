@@ -4,6 +4,8 @@ import { Image, Platform, Text, View } from "react-native";
 // Import types
 import { POKEMON_TYPE_COLORS } from "../constants/pokemonTypeColors";
 import { Pokemon } from "../types/pokemon";
+import { capitalizeWords } from "../utils/stringUtils";
+
 
 // Custom props type
 interface PokemonCardProps {
@@ -32,7 +34,7 @@ const PokemonCard = ({ pokemon }: { pokemon: Pokemon }) => {
                     source={{ uri: pokemon.imageURL }}
                     style={{ width: 120, height: 120 }}
                 />
-                <Text className="font-bold text-xl">{pokemon.name}</Text>
+                <Text className="font-bold text-xl">{capitalizeWords(pokemon.name)}</Text>
                 <Text className="font-extralight">{pokemon.dexNumber.toString().padStart(3, '0')}</Text>
             </View>
         </Link>
