@@ -21,7 +21,7 @@ const Evolutions = () => {
 
   return (
     <View className="p-5 flex gap-5">
-      {evolutions.map((evo, index) => (
+      {evolutions.length > 0 && evolutions.map((evo, index) => (
         <View key={evo.evolvesTo}>
           {evo.trigger == "use-item" && (
             <Text className="font-bold text-xl">{capitalizeWords(evo.item!)}</Text>
@@ -43,6 +43,11 @@ const Evolutions = () => {
           </View>  
         </View>
       ))}
+      {evolutions.length == 0 && (
+        <View className="flex justify-center items-center h-full">
+          <Text className="text-2xl font-bold">This Pokemon Does Not Evolve ‼️</Text>
+        </View>
+      )}
     </View>
   )
 }

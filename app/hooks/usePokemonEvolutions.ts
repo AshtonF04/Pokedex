@@ -12,13 +12,11 @@ export function usePokemonEvolutions(pokemonId: number | string | undefined) {
       try {
         setLoading(true);
 
-        // 1️⃣ Fetch species
         const speciesRes = await fetch(
           `https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`
         );
         const speciesData = await speciesRes.json();
 
-        // 2️⃣ Fetch evolution chain
         const chainRes = await fetch(speciesData.evolution_chain.url);
         const chainData = await chainRes.json();
 
@@ -47,17 +45,20 @@ export function usePokemonEvolutions(pokemonId: number | string | undefined) {
               getSpriteAndId(evo.species.name),
             ]);
 
-            results.push({
-              id: fromData.id,
-              name: fromName,
-              sprite: fromData.sprite,
-              evolvesTo: evo.species.name,
-              evolvesToId: toData.id,
-              evolvesToSprite: toData.sprite,
-              minLevel: details.min_level ?? null,
-              trigger: details.trigger?.name ?? null,
-              item: details.item?.name ?? null,
-            });
+            // Only add to results if it is a kanto pokemon
+            if (toData.id <= 151 && fromData.id <= 151){
+              results.push({
+                id: fromData.id,
+                name: fromName,
+                sprite: fromData.sprite,
+                evolvesTo: evo.species.name,
+                evolvesToId: toData.id,
+                evolvesToSprite: toData.sprite,
+                minLevel: details.min_level ?? null,
+                trigger: details.trigger?.name ?? null,
+                item: details.item?.name ?? null,
+              });
+            }
 
             await traverse(evo);
           }
